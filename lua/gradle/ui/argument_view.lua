@@ -112,7 +112,7 @@ function ArgumentView:_on_input_change(query)
     query = string.gsub(query, '%W', '%%%1')
     local nodes = {}
     for _, option in ipairs(options) do
-      if query == '' or string.match(option.name, query) then
+      if query == '' or string.match(option.text, query) then
         local node = create_option_node(option)
         table.insert(nodes, node)
       end
@@ -149,12 +149,6 @@ function ArgumentView:_create_input_component()
     },
   }, {
     prompt = self._input_prompt,
-    on_submit = function(value)
-      local args = {}
-      for item in string.gmatch(value, '[^%s]+') do
-        table.insert(args, item)
-      end
-    end,
     on_change = function(query)
       self:_on_input_change(query)
     end,
