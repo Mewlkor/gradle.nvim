@@ -111,9 +111,9 @@ function ArgumentView:_on_input_change(query)
   vim.schedule(function()
     query = string.gsub(query, '%W', '%%%1')
     local nodes = {}
-    for _, option in ipairs(options) do
-      if query == '' or string.match(option.text, query) then
-        local node = create_option_node(option)
+    for i = 1, #options do
+      if query == '' or string.match(options[i].text, query) then
+        local node = create_option_node(options[i])
         table.insert(nodes, node)
       end
     end
