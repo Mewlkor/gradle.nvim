@@ -123,9 +123,9 @@ function ArgumentView:_on_input_change(query)
     end
     self._options_tree:set_nodes(nodes)
     self._options_tree:render()
-    if self._options_component.winid then
+    --[[ if self._options_component.winid then
       vim.api.nvim_win_set_cursor(self._options_component.winid, { 1, 0 })
-    end
+    end ]]
   end)
 end
 function ArgumentView:_on_input_submit()
@@ -269,7 +269,7 @@ function ArgumentView:mount()
   -- crete the list of options
   self:_create_options_component()
   -- create the input component
-  -- self:_create_input_component()
+  self:_create_input_component()
   -- create the layout
   self:_create_layout()
 end
