@@ -375,10 +375,15 @@ function ProjectView:_setup_win_maps()
   self._win:map('n', 'g', function()
     vim.ui.select(GradleConfig.options.gradle_default_args, {
       format_item = function(item)
+        local line = NuiLine()
+        line:append(item.arg, highlights.SPECIAL_TEXT)
+        line:append(item.value, highlights.SPECIAL_TEXT)
+        line:append('Enabled: ', highlights.SPECIAL_TEXT)
+        line:append(tostring(item.enabled), highlights.SPECIAL_TEXT)
+        print(line)
         return item.arg .. '=' .. item.value .. ' Enabled: ' .. tostring(item.enabled)
       end,
     }, function(choice)
-      print(choice.enabled)
       if choice.enabled then
         choice.enabled = false
       else
