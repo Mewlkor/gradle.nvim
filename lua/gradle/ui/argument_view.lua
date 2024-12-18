@@ -102,6 +102,7 @@ end
 ---@private On input change handler
 ---@param query string
 function ArgumentView:_on_input_change(query)
+  print(tostring(self._options_component.winid))
   local current_node = self._options_tree:get_node()
   if query == '' and current_node and current_node.type == 'loading' then
     return
