@@ -379,6 +379,11 @@ function ProjectView:_setup_win_maps()
       end,
     }, function(choice)
       print(choice.enabled)
+      if choice.enabled then
+        choice.enabled = false
+      else
+        choice.enabled = true
+      end
     end)
   end)
   self._win:map('n', { '<esc>', 'q' }, function()
