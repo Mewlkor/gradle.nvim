@@ -5,11 +5,8 @@ local Line = require('nui.line')
 local Text = require('nui.text')
 local Popup = require('nui.popup')
 local icons = require('gradle.ui.icons')
-local Sources = require('gradle.sources')
 local highlights = require('gradle.config.highlights')
 local GradleConfig = require('gradle.config')
-local Utils = require('gradle.utils')
-local Console = require('gradle.utils.console')
 
 ---@class Option
 ---@field name string
@@ -102,7 +99,6 @@ end
 ---@private On input change handler
 ---@param query string
 function ArgumentView:_on_input_change(query)
-  print(tostring(self._options_component.winid))
   local current_node = self._options_tree:get_node()
   if query == '' and current_node and current_node.type == 'loading' then
     return
@@ -124,36 +120,14 @@ function ArgumentView:_on_input_change(query)
     end
     self._options_tree:set_nodes(nodes)
     self._options_tree:render()
-    --[[ if self._options_component.winid then
+    if self._options_component.winid then
       vim.api.nvim_win_set_cursor(self._options_component.winid, { 1, 0 })
-    end ]]
-  end)
-end
-function ArgumentView:_on_input_submit()
-  print(tostring(self._options_component.winid))
-  local current_node = self._options_tree:get_node()
-  if not current_node or current_node.type == 'loading' then
-    return
-  end
-  vim.schedule(function()
-    for i = 1, #GradleConfig.options.gradle_default_args do
-      if
-        GradleConfig.options.gradle_default_args[i].arg == current_node.arg
-        and GradleConfig.options.gradle_default_args[i].value == current_node.value
-      then
-        if GradleConfig.options.gradle_default_args[i].enabled then
-          GradleConfig.options.gradle_default_args[i].enabled = false
-        else
-          GradleConfig.options.gradle_default_args[i].enabled = true
-        end
-      end
     end
   end)
 end
 ---@private Create the input component
 function ArgumentView:_create_input_component()
   self._input_component = Input({
-    enter = true,
     ns_id = GradleConfig.namespace,
     relative = 'win',
     position = {
@@ -168,15 +142,13 @@ function ArgumentView:_create_input_component()
     border = {
       style = { '╭', '─', '╮', '│', '│', '─', '│', '│' },
       text = {
-        top = ' Execute Gradle Command ',
+        top = ' Set default command arguments ',
         top_align = 'center',
       },
     },
   }, {
     prompt = self._input_prompt,
-    on_submit = function()
-      self:_on_input_submit()
-    end,
+
     on_change = function(query)
       self:_on_input_change(query)
     end,
@@ -187,6 +159,7 @@ function ArgumentView:_create_input_component()
   end
   self._input_component:map('i', { '<C-n>', '<Down>' }, move_next)
   self._input_component:map('n', { 'j', '<C-n>', '<Down>' }, move_next)
+  self._input_component:map('i', { '<enter>' }, move_next)
   self._input_component:map('n', { '<esc>', 'q' }, function()
     self._layout:unmount()
     if vim.api.nvim_win_is_valid(self._prev_win) then
