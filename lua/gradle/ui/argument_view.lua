@@ -200,7 +200,7 @@ function ArgumentView:_create_options_component()
           end
         end
       end
-      print(current_node)
+      self:_create_options_tree_list()
     end)
   end)
 
