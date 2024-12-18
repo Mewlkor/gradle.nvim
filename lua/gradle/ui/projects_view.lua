@@ -378,7 +378,7 @@ function ProjectView:_setup_win_maps()
         return item.arg .. '=' .. item.value .. ' Enabled: ' .. tostring(item.enabled)
       end,
     }, function(choice)
-      choice.enabled = ~choice.enabled
+      print(choice.enabled)
     end)
   end)
   self._win:map('n', { '<esc>', 'q' }, function()
