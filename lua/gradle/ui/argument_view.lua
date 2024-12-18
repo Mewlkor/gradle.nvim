@@ -112,7 +112,11 @@ function ArgumentView:_on_input_change(query)
     query = string.gsub(query, '%W', '%%%1')
     local nodes = {}
     for i = 1, #options do
-      if query == '' or string.match(options[i].text, query) then
+      if
+        query == ''
+        or string.match(options[i].arg, query)
+        or string.match(options[i].value, query)
+      then
         local node = create_option_node(options[i])
         table.insert(nodes, node)
       end
