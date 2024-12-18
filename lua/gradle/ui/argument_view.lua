@@ -269,7 +269,7 @@ function ArgumentView:mount()
   -- crete the list of options
   self:_create_options_component()
   -- create the input component
-  self:_create_input_component()
+  -- self:_create_input_component()
   -- create the layout
   self:_create_layout()
 end
