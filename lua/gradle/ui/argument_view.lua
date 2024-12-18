@@ -129,7 +129,7 @@ function ArgumentView:_on_input_change(query)
   end)
 end
 function ArgumentView:_on_input_submit()
-  print(tostring(self))
+  print(tostring(self._options_component.winid))
   local current_node = self._options_tree:get_node()
   if not current_node or current_node.type == 'loading' then
     return
