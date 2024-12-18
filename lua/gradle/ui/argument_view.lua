@@ -200,6 +200,7 @@ function ArgumentView:_create_options_component()
           end
         end
       end
+      print(current_node)
     end)
   end)
 
