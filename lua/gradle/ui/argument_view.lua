@@ -172,7 +172,9 @@ function ArgumentView:_create_input_component()
     },
   }, {
     prompt = self._input_prompt,
-    on_submit = self:_on_input_submit(),
+    on_submit = function()
+      self:_on_input_submit()
+    end,
     on_change = function(query)
       self:_on_input_change(query)
     end,
